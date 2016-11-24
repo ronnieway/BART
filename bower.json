@@ -1,0 +1,23 @@
+{
+  "name": "transportation",
+  "version": "0.0.1",
+  "authors": [
+    "Ruslan Dorozhovets"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "knockout": "^3.4.0",
+    "normalize-css": "normalize.css#^4.2.0"
+  },
+  "homepage": "https://github.com/ronnieway/transportation",
+  "description": "",
+  "main": ""
+}

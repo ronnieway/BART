@@ -1,0 +1,33 @@
+{
+  "name": "transportation",
+  "version": "0.0.1",
+  "description": "Transportation project for Udacity Senior Web Developer Nanodegree programm (offline application + gtfs data)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ruslan Dorozhovets",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.16.0",
+    "del": "^2.2.2",
+    "eslint": "^3.10.2",
+    "gulp": "git+https://git@github.com/gulpjs/gulp.git#4.0",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-inject": "^4.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-remember": "^0.3.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "multipipe": "^0.3.1",
+    "path": "^0.12.7"
+  },
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

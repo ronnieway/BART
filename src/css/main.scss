@@ -1,0 +1,18 @@
+/*
+* THIRD PARTY CSS
+*/
+@import "../../bower_components/normalize.css/normalize.css";
+@import "../../bower_components/bootstrap/dist/css/bootstrap.min.css";
+
+/*
+* MY CODE
+*/
+
+@import "_settings/variables.scss";
+@import "_settings/colors.scss";
+@import "_parts/all.scss";
+
+/*
+* ADDITIONAL PLUGINS
+*/
+@import "_plugins/plugins.scss";
