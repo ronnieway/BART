@@ -1,3 +1,41 @@
 <section class="header">
+	<div class="row" id="top-gray">
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-3 col-lg-3">
+			<div id="bigtext">
+				<span class="bart">BART</span>
+				<span class="bart">Bay Area Rapid Transit</span>
+				<span class="bart">Find the way</span>
+				<span class="bart">to chosen destination</span>
+			</div>
+		</div>
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<form id="form-container" class="form-container form-inline">
+				<label for="stations-input">Nearest station: </label>
+				<input list="stations-list" class="form-control" id="stations-input" placeholder="Choose departure station" autocomplete="off" required> 
+				<datalist id="stations-list">
 
+				</datalist>
+				<button id="submit-btn" class="btn btn-default">Submit</button>
+			</form>
+
+			<form id="form-container2" class="form-container form-inline">
+				<label for="stations-input2">Your destination: </label>
+				<input list="stations-list2" class="form-control" id="stations-input2" placeholder="Choose destination" autocomplete="off"> 
+				<datalist id="stations-list2">
+
+				</datalist>
+				<button id="submit-btn2" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+		<div class="col-md-1 col-lg-1">
+		</div>
+	</div>
 </section>

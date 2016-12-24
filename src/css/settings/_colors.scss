@@ -1,15 +1,4 @@
-/*
-* THIRD PARTY CSS
-*/
-@import "../../bower_components/normalize.css/normalize.css";
-@import "../../bower_components/bootstrap/dist/css/bootstrap.min.css";
-
-/*
-* MY CODE
-*/
-@import "parts/all.scss";
-
-/*
-* ADDITIONAL PLUGINS
-*/
-@import "plugins/plugins.scss";
+$color-dark-main: #071e2d;
+$color-dark-secondary: #2d0d44;
+$color-light-main: #fffde0;
+$color-light-secondary: #effcfc;

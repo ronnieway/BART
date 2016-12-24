@@ -4,7 +4,6 @@ const gulp = require('gulp');
 const del = require('del');
 const autoprefixer = require('gulp-autoprefixer');
 const remember = require('gulp-remember');
-const path = require('path');
 const browserSync = require('browser-sync').create();
 const multipipe = require('multipipe');
 const notify = require('gulp-notify');
@@ -19,73 +18,118 @@ const rename = require('gulp-rename');
 
 var myPath = {
 	dist: {
-		index: 'dist/',
-		html: 'dist/html/',
-		js: 'dist/js/',
-		css: 'dist/css/',
-		img: 'dist/img/',
-		fonts: 'dist/fonts/',
-		others: 'dist/others/',
-		readme: 'dist/'
+		indexFolder: 'dist/',
+		indexHTML: 'dist/index.html',
+		mainJS: 'dist/js/',
+		otherJS: 'dist/js/other/',
+		mainCSS: 'dist/css/',
+		allImg: 'dist/img/',
+		allFonts: 'dist/fonts/',
+		allOthers: 'dist/others/',
+		readme: 'dist/',
+		bower: 'dist/bower_components/'
 	},
 	src: {
-		index: 'src/index.html',
-		html: 'src/html/*.html',
-		js: 'src/js/main.js',
-		css: 'src/css/main.scss',
-		img: 'src/img/**/*.*',
-		fonts: 'src/fonts/**/*.*',
-		others: 'src/others/**/*.*',
+		indexHTML: 'src/index.html',
+		allHTML: 'src/html/*.html',
+		mainJS: 'src/js/main.js',
+		mainSCSS: 'src/css/main.scss',
+		mainCSS: 'src/css/main.css',
+		partsSCSS: 'src/css/parts/*.scss',
+		pluginsSCSS: 'src/css/plugins/*.scss',
+		settingsSCSS: 'src/css/settings/*.scss',
+		partsJS: 'src/js/parts/*.js',
+		pluginsJS: 'src/js/plugins/*.js',
+		swJS: 'src/*.js',
+		allImg: 'src/img/**/*.*',
+		allFonts: 'src/fonts/**/*.*',
+		allOthers: 'src/others/**/*.*',
 		readme: 'src/README.md',
-		jade: 'src/js/main.jade',
-		alljs: 'src/js/**/*.js',
+		mainJade: 'src/js/main.jade',
 		indexFolder: 'src/',
-		jsFolder: 'src/js/'
-	},
-	watch: {
-		index: 'src/*.html',
-		html: 'src/html/**/*.html',
-		js: 'src/js/**/*.js',
-		css: 'src/css/**/*.scss',
-		img: 'src/img/**/*.*',
-		fonts: 'src/fonts/**/*.*',
-		others: 'src/others/**/*.*',
-		readme: 'src/README.md'
+		jsFolder: 'src/js/',
+		cssFolder: 'src/css/',
+		bower: 'bower_components/**/*.*'
 	},
 	clean: 'dist'
 };
 
-gulp.task('injectHTML', function(done){
-	gulp.src(myPath.src.index)
-		.pipe(inject(gulp.src([myPath.src.html]), {
-			starttag: '<!-- inject:html -->',
+gulp.task('injectHTML', function(){
+	return multipipe(
+		gulp.src(myPath.src.indexHTML),
+		inject(gulp.src('src/html/_head.html'), {
+			starttag: '<!-- inject:_head:html -->',
 			transform: function (filePath, file) {
 				return file.contents.toString();
 			}
-		}))
-		.pipe(gulp.dest(myPath.src.indexFolder));
-	done();
+		}),
+		inject(gulp.src('src/html/header.html'), {
+			starttag: '<!-- inject:header:html -->',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		inject(gulp.src('src/html/navigation.html'), {
+			starttag: '<!-- inject:navigation:html -->',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		inject(gulp.src('src/html/content.html'), {
+			starttag: '<!-- inject:content:html -->',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		inject(gulp.src('src/html/footer.html'), {
+			starttag: '<!-- inject:footer:html -->',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		inject(gulp.src('src/html/_scripts.html'), {
+			starttag: '<!-- inject:_scripts:html -->',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		gulp.dest(myPath.src.indexFolder))
+	.on('error', notify.onError(function(err) {
+		return {
+			message: err.message
+		};
+	}));			
 });
 
-gulp.task('injectJS', function(done){
-	gulp.src(myPath.src.jade)
-		.pipe(inject(gulp.src([myPath.src.alljs]), {
-			starttag: '//- inject:jade',
+gulp.task('injectJS', function(){
+	return multipipe(
+		gulp.src(myPath.src.mainJade),
+		inject(gulp.src([myPath.src.partsJS]), {
+			starttag: '//- inject:parts',
 			transform: function (filePath, file) {
 				return file.contents.toString();
 			}
-		}))
-		.pipe(rename('main.js'))
-		.pipe(gulp.dest(myPath.src.jsFolder));
-	done();
+		}),
+		inject(gulp.src([myPath.src.pluginsJS]), {
+			starttag: '//- inject:plugins',
+			transform: function (filePath, file) {
+				return file.contents.toString();
+			}
+		}),
+		rename('main.js'),
+		gulp.dest(myPath.src.jsFolder))
+	.on('error', notify.onError(function(err) {
+		return {
+			message: err.message
+		};
+	}));
 });
 
 gulp.task('index', function() {
 	return multipipe(
-		gulp.src(myPath.src.index),
-		remember('index'),
-		gulp.dest(myPath.dist.index)
-	).on('error', notify.onError(function(err) {
+		gulp.src(myPath.src.indexHTML),
+		gulp.dest(myPath.dist.indexFolder))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -94,15 +138,14 @@ gulp.task('index', function() {
 
 gulp.task('css', function() {
 	return multipipe(
-		gulp.src(myPath.src.css),
-		remember('css'),
+		gulp.src(myPath.src.mainSCSS),
 		sourcemaps.init(),
 		sass(),
 		autoprefixer(),
 		cssnano(),
 		sourcemaps.write(),
-		gulp.dest(myPath.dist.css)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.mainCSS))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -111,13 +154,12 @@ gulp.task('css', function() {
 
 gulp.task('cssRelease', function() {
 	return multipipe(
-		gulp.src(myPath.src.css),
-		remember('css'),
+		gulp.src(myPath.src.mainSCSS),
 		sass(),
 		autoprefixer(),
 		cssnano(),
-		gulp.dest(myPath.dist.css)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.mainCSS))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -127,14 +169,28 @@ gulp.task('cssRelease', function() {
 
 gulp.task('js', function() {
 	return multipipe(
-		gulp.src(myPath.src.js),
+		gulp.src(myPath.src.mainJS),
 		babel(),
-		remember('js'),
 		sourcemaps.init(),
-		uglify(),
+//		uglify(),
 		sourcemaps.write(),
-		gulp.dest(myPath.dist.js)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.mainJS))
+	.on('error', notify.onError(function(err) {
+		return {
+			message: err.message
+		};
+	}));
+});
+
+gulp.task('otherJS', function() {
+	return multipipe(
+		gulp.src(myPath.src.swJS),
+		babel(),
+		sourcemaps.init(),
+//		uglify(),
+		sourcemaps.write(),
+		gulp.dest(myPath.dist.indexFolder))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -143,12 +199,24 @@ gulp.task('js', function() {
 
 gulp.task('jsRelease', function() {
 	return multipipe(
-		gulp.src(myPath.src.js),
+		gulp.src(myPath.src.mainJS),
 		babel(),
-		remember('js'),
 		uglify(),
-		gulp.dest(myPath.dist.js)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.mainJS))
+	.on('error', notify.onError(function(err) {
+		return {
+			message: err.message
+		};
+	}));
+});
+
+gulp.task('otherJSRelease', function() {
+	return multipipe(
+		gulp.src(myPath.src.swJS),
+		babel(),
+		uglify(),
+		gulp.dest(myPath.dist.indexFolder))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -157,11 +225,11 @@ gulp.task('jsRelease', function() {
 
 gulp.task('img', function() {
 	return multipipe(
-		gulp.src(myPath.src.img),
+		gulp.src(myPath.src.allImg),
 		remember('img'),
 		imagemin(),
-		gulp.dest(myPath.dist.img)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.allImg))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -170,10 +238,10 @@ gulp.task('img', function() {
 
 gulp.task('fonts', function() {
 	return multipipe(
-		gulp.src(myPath.src.fonts),
+		gulp.src(myPath.src.allFonts),
 		remember('fonts'),
-		gulp.dest(myPath.dist.fonts)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.allFonts))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -182,10 +250,10 @@ gulp.task('fonts', function() {
 
 gulp.task('others', function() {
 	return multipipe(
-		gulp.src(myPath.src.others),
+		gulp.src(myPath.src.allOthers),
 		remember('others'),
-		gulp.dest(myPath.dist.others)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.allOthers))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -196,8 +264,20 @@ gulp.task('readme', function() {
 	return multipipe(
 		gulp.src(myPath.src.readme),
 		remember('readme'),
-		gulp.dest(myPath.dist.readme)
-	).on('error', notify.onError(function(err) {
+		gulp.dest(myPath.dist.readme))
+	.on('error', notify.onError(function(err) {
+		return {
+			message: err.message
+		};
+	}));
+});
+
+gulp.task('bower', function() {
+	return multipipe(
+		gulp.src(myPath.src.bower),
+		remember('bower'),
+		gulp.dest(myPath.dist.bower))
+	.on('error', notify.onError(function(err) {
 		return {
 			message: err.message
 		};
@@ -208,47 +288,55 @@ gulp.task('clean', function() {
 	return del(myPath.clean);
 });
 
-gulp.task('cleanJS', function() {
-	return del(myPath.src.js);
+gulp.task('cleanMainJS', function() {
+	return del(myPath.src.mainJS);
 });
 
+gulp.task('cleanMainSCSS', function() {
+	del(myPath.src.mainSCSS);
+	return multipipe(
+		gulp.src(myPath.src.mainCSS),
+		rename('main.scss'),
+		gulp.dest(myPath.src.cssFolder)
+	);
+});	
+
 gulp.task('server', function() {
-	browserSync.init(
-		{server: 'dist'});
-	browserSync.watch('dist/**/*.*').on('change', browserSync.reload);
+	browserSync.init({
+		server: 'dist'
+	});
+	browserSync.watch('dist/**/*.*')
+	.on('change', browserSync.reload);
 });
 
 gulp.task('watch', function() {
-	gulp.watch(myPath.src.js, gulp.series('js')).on('unlink', function(filepath) {
-		remember.forget('js', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.css, gulp.series('css')).on('unlink', function(filepath) {
-		remember.forget('css', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.img, gulp.series('img')).on('unlink', function(filepath) {
-		remember.forget('img', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.fonts, gulp.series('fonts')).on('unlink', function(filepath) {
-		remember.forget('fonts', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.others, gulp.series('others')).on('unlink', function(filepath) {
-		remember.forget('others', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.index, gulp.series('index')).on('unlink', function(filepath) {
-		remember.forget('index', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.html, gulp.series('html')).on('unlink', function(filepath) {
-		remember.forget('html', path.resolve(filepath)).on('change', browserSync.reload);
-	});
-	gulp.watch(myPath.src.readme, gulp.series('readme')).on('unlink', function(filepath) {
-		remember.forget('readme', path.resolve(filepath)).on('change', browserSync.reload);
-	});
+	gulp.watch(myPath.src.partsJS, gulp.series('cleanMainJS', 'injectJS', 'js'));
+
+	gulp.watch(myPath.src.pluginsJS, gulp.series('cleanMainJS', 'injectJS', 'js'));
+
+	gulp.watch(myPath.src.swJS, gulp.series('otherJS'));
+
+	gulp.watch(myPath.src.partsSCSS, gulp.series('cleanMainSCSS', 'css'));
+
+	gulp.watch(myPath.src.pluginsSCSS, gulp.series('cleanMainSCSS', 'css'));
+
+	gulp.watch(myPath.src.settingsSCSS, gulp.series('cleanMainSCSS', 'css'));
+
+	gulp.watch(myPath.src.allImg, gulp.series('img'));
+
+	gulp.watch(myPath.src.allFonts, gulp.series('fonts'));
+
+	gulp.watch(myPath.src.allOthers, gulp.series('others'));
+
+	gulp.watch(myPath.src.allHTML, gulp.series('injectHTML', 'index'));
+
+	gulp.watch(myPath.src.readme, gulp.series('readme'));
 });
 
-gulp.task('build', gulp.series('clean', 'cleanJS', 'injectHTML', 'injectJS', 'css', 'js', 'index', 'img', 'others', 'fonts', 'readme'));
+gulp.task('build', gulp.series('clean', 'bower', 'cleanMainJS', 'cleanMainSCSS', 'injectJS', 'injectHTML', 'css', 'js', 'otherJS', 'index', 'img', 'others', 'fonts', 'readme'));
 
 gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'server')));
 
-gulp.task('buildRelease', gulp.series('clean', 'cleanJS', 'injectHTML', 'injectJS', 'cssRelease', 'jsRelease', 'index', 'img', 'others', 'fonts', 'readme'));
+gulp.task('buildRelease', gulp.series('clean', 'bower', 'cssRelease', 'jsRelease', 'otherJSRelease', 'index', 'img', 'others', 'fonts', 'readme'));
 
 gulp.task('release', gulp.series('buildRelease', gulp.parallel('watch','server')));

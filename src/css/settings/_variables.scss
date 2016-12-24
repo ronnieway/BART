@@ -1,15 +1,33 @@
-/*
-* THIRD PARTY CSS
-*/
-@import "../../bower_components/normalize.css/normalize.css";
-@import "../../bower_components/bootstrap/dist/css/bootstrap.min.css";
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: otf eot woff2 woff ttf svg) {
+	$src: null;
 
-/*
-* MY CODE
-*/
-@import "parts/all.scss";
+	$extmods: (
+		eot: "?",
+		svg: "#" + str-replace($name, " ", "_")
+	);
 
-/*
-* ADDITIONAL PLUGINS
-*/
-@import "plugins/plugins.scss";
+	$formats: (
+		otf: "opentype",
+		ttf: "truetype"
+	);
+
+	@each $ext in $exts {
+		$extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+		$src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+	}
+
+	@font-face {
+		font-family: quote($name);
+		font-style: $style;
+		font-weight: $weight;
+		src: $src;
+	}
+}
+
+//@include font-face(Hero, "../fonts/HeroLight");
+//@include font-face(Ribbon, "../fonts/CyrillicRibbon");
+
+$main-font-family: Arial, Helvetica, sans-serif;
+$secondary-font-family: Verdana, Arial, Helvetica, sans-serif;
+$handwriting-font-family: Verdana, Arial, Helvetica, sans-serif;
