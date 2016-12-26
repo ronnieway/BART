@@ -1,44 +1,119 @@
 /* MAIN PART STYLES */
+body {
+	background-color: gray;
+	overflow-x: hidden;
+}
+
+th {
+	color:white;
+}
+
+.header {
+	width: 100vw;
+	box-sizing: border-box;
+}
+
+.row {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+#barts {
+	background-color: white;
+	box-sizing: border-box;
+}
+
+#forms {
+	color: white;
+ 	text-align: left;
+	box-sizing: border-box;
+}
+
 .bart {
 	display: inline;
 }
 
 #top-gray {
-	height: 5vh;
-	width: 100vw;
+	height: 3vh;
 	background-color: gray;
+	margin: 0 0 1px 0;
+	padding: 0;
+	border-bottom: 2px solid gray;
 }
 
+#top-white {
+	height: 3vh;
+	background-color: white;
+	margin: 0 0 1px 0;
+	padding: 0;
+	border-bottom: 2px solid gray;
+}
 
 #form-container2 {
 	display:none;
 }
 
 #form-container, #form-container2 {
-	margin-top: 10vh;
+	margin: 10vh 5vw 10vh 5vw auto;
 }
 
 #sched-table {
 	padding:25px;
 }
 
+#sched-results p, #sched-results h4 {
+	color: white;
+	text-align: center;
+}
+
+#routes-at-station-values {
+	padding-left: 2vw;
+}
+
+#routes-at-station-values p{
+	padding-left: 2vw;
+}
+
 #routes-at-station-values a{
 	color: black;
+	cursor: pointer;
+}
+
+#routes-at-station-header {
+	color: white;
 }
 
 #offline-sched {
 	cursor: pointer;
+	margin: 3vh auto;
+	width: 50vw;
 }
 
-#stations-input, #stations-input2 {
-	width: 20vw;
+#stations-input {
+	width: 30vw;
 }
 
+#stations-input2 {
+	width: 29vw;
+}
+
+.content {
+	margin-top: 1vh;
+	border-top: 2px solid white;
+}
+
+.suggestedTime {
+	text-align: left;
+}
+
+.you-are-here {
+	color: white;
+	background-color: gray;
+}
 
 #route1 {
 	padding:20px;
 	background-color: #ffff33;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -46,7 +121,6 @@
 #route12 {
 	padding:20px;
 	background-color: #0099cc;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -54,7 +128,6 @@
 #route6 {
 	padding:20px;
 	background-color: #339933;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -62,7 +135,6 @@
 #route11 {
 	padding:20px;
 	background-color: #0099cc;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -70,7 +142,6 @@
 #route5 {
 	padding:20px;
 	background-color: #339933;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -78,7 +149,6 @@
 #route3 {
 	padding:20px;
 	background-color: #ff9933;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -86,7 +156,6 @@
 #route8 {
 	padding:20px;
 	background-color: #ff0000;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -94,7 +163,6 @@
 #route4 {
 	padding:20px;
 	background-color: #ff9933;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -102,7 +170,6 @@
 #route7 {
 	padding:20px;
 	background-color: #ff0000;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -110,7 +177,6 @@
 #route2 {
 	padding:20px;
 	background-color: #ffff33;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -118,7 +184,6 @@
 #route19 {
 	padding:20px;
 	background-color: #d5cfa3;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }
@@ -126,7 +191,6 @@
 #route20 {
 	padding:20px;
 	background-color: #d5cfa3;
-	width: 24vw;
 	display: inline-block;
 	border: solid 1px white;
 }

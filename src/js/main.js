@@ -372,12 +372,12 @@ function chooseStation() {
 		b = b.replace(/\s/g, '');
 		let nRoutes= a.split("ROUTE").slice(2);
 		let sRoutes= b.split("ROUTE").slice(2);
-		$("#routes-at-station-header").html("<h4>Routes here</h4>");
+		$("#routes-at-station-header").html("Routes at the station");
 		for (let i=0; i<nRoutes.length; i++) {
-			$("#routes-at-station-values").append("<div id='route" + nRoutes[i] + "'><b><a onclick='chooseRoute(" + nRoutes[i] + ");'>Route " + nRoutes[i] + "</a></b></div>");
+			$("#routes-at-station-values").append("<div class='col-xs-10 col-sm-10 col-md-5 col-lg-5' id='route" + nRoutes[i] + "'><b><a onclick='chooseRoute(" + nRoutes[i] + ");'>Route " + nRoutes[i] + "</a></b></div>");
 		}		
 		for (let j=0; j<sRoutes.length; j++) {
-			$("#routes-at-station-values").append("<div id='route" + sRoutes[j] + "'><b><a onclick='chooseRoute(" + sRoutes[j] + ");'>Route " + sRoutes[j] + "</a></b></div>");
+			$("#routes-at-station-values").append("<div class='col-xs-10 col-sm-10 col-md-5 col-lg-5' id='route" + sRoutes[j] + "'><b><a onclick='chooseRoute(" + sRoutes[j] + ");'>Route " + sRoutes[j] + "</a></b></div>");
 		}	
 	}
 
@@ -420,7 +420,7 @@ function chooseRoute(x) {
 			let onclick = "finalDestination('" + a[i] + "')";
 			if ($("#stations-list option[data-value='" + a[i] + "']").attr('value') != undefined) {
 				if(a[i] == $("#stations-list option[value='" + chosen + "']").attr('data-value')) {
-					$(b).append("<p> You are here: " + $("#stations-list option[data-value='" + a[i] + "']").attr('value') + "</p>");
+					$(b).append("<p class='you-are-here'> You are here: " + $("#stations-list option[data-value='" + a[i] + "']").attr('value') + "</p>");
 				} else {
 					$(b).append("<p><a onclick=" + onclick + ";>" + $("#stations-list option[data-value='" + a[i] + "']").attr('value') + "</a></p>");
 				}
@@ -451,19 +451,19 @@ function finalDestination(xx) {
 		$("#all-schedule-content").html("");
 		$("#routes-at-station-values").html("");
 		$("#routes-at-station-header").html("");
-		$("#sched-results").append("<h4>You can pick one of these following trains to " + $("#stations-list option[data-value='" + xx + "']").attr('value') + "</h4>");
+		$("#sched-results").append("<h4 class='suggestedTime'>You can pick one of the following trains to " + $("#stations-list option[data-value='" + xx + "']").attr('value') + "</h4>");
 		$(xml).find("trip").each(function() {			
 			let depTimeArr = this.children[1].outerHTML.split("origTimeMin=");
 			let depTime = depTimeArr[1].slice(1,9);
 			let arrTimeArr = this.children[1].outerHTML.split("destTimeMin=");
 			let arrTime = arrTimeArr[1].slice(1,9);
-			if (depTime[8] == '"') {
+			if (depTime[7] == '"') {
 				depTime = depTime.slice(0,-1);
 			}
-			if (arrTime[8] == '"') {
+			if (arrTime[7] == '"') {
 				arrTime = arrTime.slice(0,-1);
 			}
-			$("#sched-results").append("<p>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
+			$("#sched-results").append("<p class='suggestedTime'>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
 		});	
 	}
 	return false;
@@ -493,19 +493,19 @@ function finalDestination2() {
 		$("#all-schedule-content").html("");
 		$("#routes-at-station-values").html("");
 		$("#routes-at-station-header").html("");
-		$("#sched-results").append("<h4>You can pick one of these following trains to " + xx + "</h4>");
+		$("#sched-results").append("<h4 class='suggestedTime'>You can pick one of the following trains to " + xx + "</h4>");
 		$(xml).find("trip").each(function() {			
 			let depTimeArr = this.children[1].outerHTML.split("origTimeMin=");
 			let depTime = depTimeArr[1].slice(1,9);
 			let arrTimeArr = this.children[1].outerHTML.split("destTimeMin=");
 			let arrTime = arrTimeArr[1].slice(1,9);
-			if (depTime[8] == '"') {
+			if (depTime[7] == '"') {
 				depTime = depTime.slice(0,-1);
 			}
-			if (arrTime[8] == '"') {
+			if (arrTime[7] == '"') {
 				arrTime = arrTime.slice(0,-1);
 			}
-			$("#sched-results").append("<p>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
+			$("#sched-results").append("<p class='suggestedTime'>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
 		});	
 	}
 	return false;
@@ -536,9 +536,8 @@ function showSchedule() {
 		$("#all-schedule-link").html("<button type='button' class='btn btn-primary btn-lg btn-block' id='offline-sched'>Offline schedule for " + currentStationVal + "</button>");
 		let theList = xml.children[0].innerHTML;
 		theList = theList.split("<item line=").slice(1);
-		$("#all-schedule-content").append("<table class='table table-hover table-responsive' id='sched-table'><thead><th>Route</th><th>Destination</th><th>Departure time</th><th>Arrival time</th></thead>");
+		let myBigTable = "<table class='table table-hover table-responsive table-striped' id='sched-table'><thead class='center'><tr class='row'><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Route</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Destination</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Departure time</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Arrival time</th></tr></thead><tbody>";
 		for (let h=0; h<theList.length; h++) {
-			
 			let columnRoute = theList[h].slice(1, 9);
 			if (columnRoute[7] == '"') {
 				columnRoute = columnRoute.slice(0,-1);
@@ -556,9 +555,10 @@ function showSchedule() {
 			if (columnFinalArr[7] == '"') {
 				columnFinalArr = columnFinalArr.slice(0,-1);
 			}
-			$("#all-schedule-content").append("<tr class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnRoute + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnDest + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnStartDep + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnFinalArr + "</td></tr>");
+			myBigTable = myBigTable + "<tr class='row'><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnRoute + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnDest + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnStartDep + "</td><td class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>" + columnFinalArr + "</td></tr>";
 		}
-		$("#all-schedule-content").append("</table>");
+		myBigTable = myBigTable + "</tbody></table>";
+		$("#all-schedule-content").append(myBigTable);
 	}
 }
 
