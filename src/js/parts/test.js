@@ -22,6 +22,7 @@ function loadData() {
 }
 
 
+
 function chooseStation() {
 	let chosen = $("#stations-input").val();
 	let currentStation = $("#stations-list option[value='" + chosen + "']").attr('data-value');
@@ -54,12 +55,12 @@ function chooseStation() {
 		b = b.replace(/\s/g, '');
 		let nRoutes= a.split("ROUTE").slice(2);
 		let sRoutes= b.split("ROUTE").slice(2);
-		$("#routes-at-station-header").html("Routes at the station");
+		$("#routes-at-station-header").html("Routes at the station:").css('color', 'white');
 		for (let i=0; i<nRoutes.length; i++) {
-			$("#routes-at-station-values").append("<div class='col-xs-10 col-sm-10 col-md-5 col-lg-5' id='route" + nRoutes[i] + "'><b><a onclick='chooseRoute(" + nRoutes[i] + ");'>Route " + nRoutes[i] + "</a></b></div>");
+			$("#routes-at-station-values").append("<div class='col-xs-6 col-sm-6 col-md-5 col-lg-5' id='route" + nRoutes[i] + "'><b><a onclick='chooseRoute(" + nRoutes[i] + ");'>Route " + nRoutes[i] + "</a></b></div>");
 		}		
 		for (let j=0; j<sRoutes.length; j++) {
-			$("#routes-at-station-values").append("<div class='col-xs-10 col-sm-10 col-md-5 col-lg-5' id='route" + sRoutes[j] + "'><b><a onclick='chooseRoute(" + sRoutes[j] + ");'>Route " + sRoutes[j] + "</a></b></div>");
+			$("#routes-at-station-values").append("<div class='col-xs-6 col-sm-6 col-md-5 col-lg-5' id='route" + sRoutes[j] + "'><b><a onclick='chooseRoute(" + sRoutes[j] + ");'>Route " + sRoutes[j] + "</a></b></div>");
 		}	
 	}
 
@@ -69,6 +70,7 @@ function chooseStation() {
 		dataType: "xml",
 		success: $("#all-schedule-link").html("<button type='button' class='btn btn-primary btn-lg btn-block' id='offline-sched'>Offline schedule for " + chosen + "</button>"),
 		error: function() {
+			$("#form-container2").css('display', 'none');
 			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
 			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
@@ -85,6 +87,7 @@ function chooseRoute(x) {
 		dataType: "xml",
 		success: parseXml3,
 		error: function() {
+			$("#form-container2").css('display', 'none');
 			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
 			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
@@ -92,7 +95,7 @@ function chooseRoute(x) {
 	});
 
 	function parseXml3(xml) {
-		$("#routes-at-station-header").html("<p>Select the destination at the chosen route</p>");
+		$("#routes-at-station-header").html("<p>Select the destination at the chosen route</p>").css('color', 'white');
 		let b = "#route" + x;
 		let a = $(xml).find("station").text();
 		a = a.match(/.{4}/g);
@@ -122,6 +125,7 @@ function finalDestination(xx) {
 		dataType: "xml",
 		success: parseXml4,
 		error: function() {
+			$("#form-container2").css('display', 'none');
 			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
 			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
@@ -163,6 +167,7 @@ function finalDestination2() {
 			dataType: "xml",
 			success: parseXml5,
 			error: function() {
+				$("#form-container2").css('display', 'none');
 				$("#routes-at-station-header").css('color', 'red').html("You are offline!");
 				$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
 				$("#all-schedule-content").html("");
@@ -175,7 +180,7 @@ function finalDestination2() {
 		$("#all-schedule-content").html("");
 		$("#routes-at-station-values").html("");
 		$("#routes-at-station-header").html("");
-		$("#sched-results").append("<h4 class='suggestedTime'>You can pick one of the following trains to " + xx + "</h4>");
+		$("#sched-results").append("<div class='suggestedTime col-xs-12 col-sm-12 col-md-12 col-lg-12'><h4 class='suggestedTime'>You can pick one of the following trains to " + xx + "</h4></div>");
 		$(xml).find("trip").each(function() {			
 			let depTimeArr = this.children[1].outerHTML.split("origTimeMin=");
 			let depTime = depTimeArr[1].slice(1,9);
@@ -187,7 +192,7 @@ function finalDestination2() {
 			if (arrTime[7] == '"') {
 				arrTime = arrTime.slice(0,-1);
 			}
-			$("#sched-results").append("<p class='suggestedTime'>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
+			$("#sched-results").append("<div class='suggestedTime col-xs-12 col-sm-12 col-md-12 col-lg-12'>Departure: " + depTime + ", arrival: " + arrTime + "</div>");
 		});	
 	}
 	return false;
@@ -203,9 +208,12 @@ function showSchedule() {
 		dataType: "xml",
 		success: parseSched,
 		error: function() {
+			$("#form-container2").css('display', 'none');
 			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
 			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
+			$("#all-schedule-content").append("<h4 class='text-center'>Sorry, schedule wasn't loaded. Here is routes map.</h4>").css('color', 'red');
+			$("#all-schedule-content").append("<img id='the-routes-map' src='img/map.gif'>");
 		}
 	});
 	function parseSched(xml) {
@@ -220,8 +228,8 @@ function showSchedule() {
 		theList = theList.split("<item line=").slice(1);
 		let myBigTable = "<table class='table table-hover table-responsive table-striped' id='sched-table'><thead class='center'><tr class='row'><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Route</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Destination</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Departure time</th><th class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Arrival time</th></tr></thead><tbody>";
 		for (let h=0; h<theList.length; h++) {
-			let columnRoute = theList[h].slice(1, 9);
-			if (columnRoute[7] == '"') {
+			let columnRoute = theList[h].slice(7, 9);
+			if (columnRoute[1] == '"') {
 				columnRoute = columnRoute.slice(0,-1);
 			}
 			let columnDestArr = theList[h].split("trainHeadStation=");

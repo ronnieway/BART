@@ -1,0 +1,112 @@
+/* up 767 @screen-xs-max*/
+@media (max-width: 767px) {
+	body {
+		font-size: 200%;
+	}
+
+	#form-container, #form-container2 {
+		margin: 5vh 10vw 5vh 10vw auto;
+	}
+
+	#stations-input {
+		width: 76vw;
+	}
+
+	#stations-input2 {
+		width: 76vw;
+	}
+
+	#submit-btn, #submit-btn2 {
+		margin: 2vh 0 5vh 0;
+		float: right;
+	}
+
+	#offline-sched {
+		width: 80vw;
+		font-size: 4vw;
+	}
+
+	#sched-table {
+		font-size: 4vw;
+	}
+
+	#the-routes-map {
+		width: 300px;
+		margin-left: 0;
+	}
+}
+/* 768 @screen-sm-min - 991 @screen-sm-max */
+@media (min-width: 768px) and (max-width: 991px) {
+	body {
+		font-size: 180%;
+	}
+
+	#form-container, #form-container2 {
+		margin: 5vh 10vw 5vh 10vw auto;
+	}
+
+	#stations-input {
+		width: 76vw;
+	}
+
+	#stations-input2 {
+		width: 76vw;
+	}
+
+	#submit-btn, #submit-btn2 {
+		margin: 2vh 0 5vh 0;
+		float: right;
+	}
+
+	#offline-sched {
+		width: 80vw;
+		font-size: 5vw;
+	}
+
+	#sched-table {
+		font-size: 4vw;
+	}
+
+	#the-routes-map {
+		width: 300px;
+		margin-left: 0;
+	}
+}
+
+/* 992 @screen-md-min - 1199 @screen-md-max */ 
+@media (min-width: 992px) and (max-width: 1199px) {
+	body {
+		font-size: 180%;
+	}
+
+	#form-container, #form-container2 {
+		margin: 5vh 10vw 5vh 10vw auto;
+	}
+
+	#stations-input {
+		width: 36vw;
+	}
+
+	#stations-input2 {
+		width: 36vw;
+	}
+
+	#submit-btn, #submit-btn2 {
+		margin: 2vh 0 5vh 0;
+		float: right;
+	}
+
+	#offline-sched {
+		width: 50vw;
+	}
+
+	#the-routes-map {
+		width: 300px;
+		margin-left: 0;
+	}
+}
+
+/* 1200 @screen-lg-min up */
+@media (min-width: 1200px) {
+
+}

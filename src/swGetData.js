@@ -18,7 +18,8 @@ this.addEventListener('install', function(event) {
 				'/index.html',
 				'/README.md',
 				'/css/main.css',
-				'/js/main.js'
+				'/js/main.js',
+				'/img/map.gif'
 			]);
 		})
     );
@@ -55,6 +56,8 @@ this.addEventListener('fetch', function(event) {
 					cache.add(fetchRequest);
 				});
 				return resp;
+			}).catch(function(error) {
+				console.log('There has been a problem with your fetch operation: ' + error.message);
 			});
 		})
 	);

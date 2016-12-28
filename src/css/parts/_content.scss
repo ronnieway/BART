@@ -21,6 +21,7 @@ th {
 #barts {
 	background-color: white;
 	box-sizing: border-box;
+	padding:0;
 }
 
 #forms {
@@ -59,6 +60,10 @@ th {
 
 #sched-table {
 	padding:25px;
+}
+
+#sched-results {
+	margin-top: 2vh;
 }
 
 #sched-results p, #sched-results h4 {
@@ -103,12 +108,16 @@ th {
 }
 
 .suggestedTime {
-	text-align: left;
+	text-align: center;
 }
 
 .you-are-here {
 	color: white;
 	background-color: gray;
+}
+
+#the-routes-map {
+	margin-left: calc(50vw - 250px);
 }
 
 #route1 {

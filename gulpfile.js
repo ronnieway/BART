@@ -8,11 +8,12 @@ const browserSync = require('browser-sync').create();
 const multipipe = require('multipipe');
 const notify = require('gulp-notify');
 const cssnano = require('gulp-cssnano');
-const uglify = require('gulp-uglify');
+const uglify = require('gulp-babel-minify');
 const imagemin = require('gulp-imagemin');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
+const es2015 = require('babel-preset-es2015');
 const inject = require('gulp-inject');
 const rename = require('gulp-rename');
 
@@ -170,9 +171,11 @@ gulp.task('cssRelease', function() {
 gulp.task('js', function() {
 	return multipipe(
 		gulp.src(myPath.src.mainJS),
-		babel(),
+		babel({
+			presets: [es2015]
+		}),
 		sourcemaps.init(),
-//		uglify(),
+		uglify(),
 		sourcemaps.write(),
 		gulp.dest(myPath.dist.mainJS))
 	.on('error', notify.onError(function(err) {
@@ -185,9 +188,11 @@ gulp.task('js', function() {
 gulp.task('otherJS', function() {
 	return multipipe(
 		gulp.src(myPath.src.swJS),
-		babel(),
+		babel({
+			presets: [es2015]
+		}),
 		sourcemaps.init(),
-//		uglify(),
+		uglify(),
 		sourcemaps.write(),
 		gulp.dest(myPath.dist.indexFolder))
 	.on('error', notify.onError(function(err) {
@@ -200,7 +205,9 @@ gulp.task('otherJS', function() {
 gulp.task('jsRelease', function() {
 	return multipipe(
 		gulp.src(myPath.src.mainJS),
-		babel(),
+		babel({
+			presets: [es2015]
+		}),
 		uglify(),
 		gulp.dest(myPath.dist.mainJS))
 	.on('error', notify.onError(function(err) {
@@ -213,7 +220,9 @@ gulp.task('jsRelease', function() {
 gulp.task('otherJSRelease', function() {
 	return multipipe(
 		gulp.src(myPath.src.swJS),
-		babel(),
+		babel({
+			presets: [es2015]
+		}),
 		uglify(),
 		gulp.dest(myPath.dist.indexFolder))
 	.on('error', notify.onError(function(err) {
