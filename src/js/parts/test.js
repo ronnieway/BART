@@ -6,8 +6,8 @@ function loadData() {
 		dataType: "xml",
 		success: parseXml,
 		error: function() {
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 		}
 	});
 
@@ -36,8 +36,8 @@ function chooseStation() {
 		},
 		complete: parseXml2,
 		error: function() {
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
 		}
 	});
@@ -45,7 +45,7 @@ function chooseStation() {
 	function parseXml2(xml) {
 		$("#form-container2").css('display', 'block');
 		$("#routes-at-station-values").html("");
-		$("#routes-at-station-header").html("<p>Choose route</p>");
+		$("#routes-at-station-header").html("<p>Choose route</p>").css({'color': 'white', 'padding': '5px', 'border': '0'});
 		$("#stations-input2").val("");
 		$("#all-schedule-content").html("");
 		$("#sched-results").html("");
@@ -55,7 +55,7 @@ function chooseStation() {
 		b = b.replace(/\s/g, '');
 		let nRoutes= a.split("ROUTE").slice(2);
 		let sRoutes= b.split("ROUTE").slice(2);
-		$("#routes-at-station-header").html("Routes at the station:").css('color', 'white');
+		$("#routes-at-station-header").html("Routes at the station:").css({'color': 'white', 'padding': '5px', 'border': '0'});
 		for (let i=0; i<nRoutes.length; i++) {
 			$("#routes-at-station-values").append("<div class='col-xs-6 col-sm-6 col-md-5 col-lg-5' id='route" + nRoutes[i] + "'><b><a onclick='chooseRoute(" + nRoutes[i] + ");'>Route " + nRoutes[i] + "</a></b></div>");
 		}		
@@ -71,8 +71,8 @@ function chooseStation() {
 		success: $("#all-schedule-link").html("<button type='button' class='btn btn-primary btn-lg btn-block' id='offline-sched'>Offline schedule for " + chosen + "</button>"),
 		error: function() {
 			$("#form-container2").css('display', 'none');
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
 		}
 	});
@@ -88,14 +88,14 @@ function chooseRoute(x) {
 		success: parseXml3,
 		error: function() {
 			$("#form-container2").css('display', 'none');
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
 		}
 	});
 
 	function parseXml3(xml) {
-		$("#routes-at-station-header").html("<p>Select the destination at the chosen route</p>").css('color', 'white');
+		$("#routes-at-station-header").html("Select the destination at the chosen route").css({'color': 'white', 'padding': '5px', 'border': '0'});
 		let b = "#route" + x;
 		let a = $(xml).find("station").text();
 		a = a.match(/.{4}/g);
@@ -126,8 +126,8 @@ function finalDestination(xx) {
 		success: parseXml4,
 		error: function() {
 			$("#form-container2").css('display', 'none');
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
 		}
 	});
@@ -136,8 +136,8 @@ function finalDestination(xx) {
 		$("#sched-results").html("");
 		$("#all-schedule-content").html("");
 		$("#routes-at-station-values").html("");
-		$("#routes-at-station-header").html("");
-		$("#sched-results").append("<h4 class='suggestedTime'>You can pick one of the following trains to " + $("#stations-list option[data-value='" + xx + "']").attr('value') + "</h4>");
+		$("#routes-at-station-header").html("").css({'color': 'white', 'padding': '5px', 'border': '0'});
+		$("#sched-results").append("<div id='suggestedTime' class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><h4>You can pick one of the following trains to " + $("#stations-list option[data-value='" + xx + "']").attr('value') + "</h4></div>");
 		$(xml).find("trip").each(function() {			
 			let depTimeArr = this.children[1].outerHTML.split("origTimeMin=");
 			let depTime = depTimeArr[1].slice(1,9);
@@ -149,7 +149,7 @@ function finalDestination(xx) {
 			if (arrTime[7] == '"') {
 				arrTime = arrTime.slice(0,-1);
 			}
-			$("#sched-results").append("<p class='suggestedTime'>Departure: " + depTime + ", arrival: " + arrTime + "</p>");
+			$("#suggestedTime").append("<div class='suggestedTime'>Departure: " + depTime + ", arrival: " + arrTime + "</div>");
 		});	
 	}
 	return false;
@@ -168,8 +168,8 @@ function finalDestination2() {
 			success: parseXml5,
 			error: function() {
 				$("#form-container2").css('display', 'none');
-				$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-				$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+				$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+				$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 				$("#all-schedule-content").html("");
 			}
 		});
@@ -179,8 +179,8 @@ function finalDestination2() {
 		$("#sched-results").html("");
 		$("#all-schedule-content").html("");
 		$("#routes-at-station-values").html("");
-		$("#routes-at-station-header").html("");
-		$("#sched-results").append("<div class='suggestedTime col-xs-12 col-sm-12 col-md-12 col-lg-12'><h4 class='suggestedTime'>You can pick one of the following trains to " + xx + "</h4></div>");
+		$("#routes-at-station-header").html("").css({'color': 'white', 'padding': '5px', 'border': '0'});
+		$("#sched-results").append("<div id='suggestedTime' class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><h4>You can pick one of the following trains to " + xx + "</h4></div>");
 		$(xml).find("trip").each(function() {			
 			let depTimeArr = this.children[1].outerHTML.split("origTimeMin=");
 			let depTime = depTimeArr[1].slice(1,9);
@@ -192,7 +192,7 @@ function finalDestination2() {
 			if (arrTime[7] == '"') {
 				arrTime = arrTime.slice(0,-1);
 			}
-			$("#sched-results").append("<div class='suggestedTime col-xs-12 col-sm-12 col-md-12 col-lg-12'>Departure: " + depTime + ", arrival: " + arrTime + "</div>");
+			$("#suggestedTime").append("<div class='suggestedTime col-xs-12 col-sm-12 col-md-12 col-lg-12'>Departure: " + depTime + ", arrival: " + arrTime + "</div>");
 		});	
 	}
 	return false;
@@ -209,15 +209,15 @@ function showSchedule() {
 		success: parseSched,
 		error: function() {
 			$("#form-container2").css('display', 'none');
-			$("#routes-at-station-header").css('color', 'red').html("You are offline!");
-			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to chek the offline schedule for the chosen station");
+			$("#routes-at-station-header").css({'color': 'red', 'padding': '5px', 'border': '1px solid red'}).html("You are offline!");
+			$("#routes-at-station-values").css('color', 'red').html("You can't get the actual information regarding your trip, but you still have a chance to check the offline schedule for the chosen station");
 			$("#all-schedule-content").html("");
 			$("#all-schedule-content").append("<h4 class='text-center'>Sorry, schedule wasn't loaded. Here is routes map.</h4>").css('color', 'red');
 			$("#all-schedule-content").append("<img id='the-routes-map' src='img/map.gif'>");
 		}
 	});
 	function parseSched(xml) {
-		$("#routes-at-station-header").html("");
+		$("#routes-at-station-header").html("").css({'color': 'white', 'padding': '5px', 'border': '0'});
 		$("#routes-at-station-values").html("");
 		$("#all-schedule-content").html("");
 		$("#sched-results").html("");

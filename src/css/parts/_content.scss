@@ -8,6 +8,10 @@ th {
 	color:white;
 }
 
+a {
+	text-decoration: none;
+}
+
 .header {
 	width: 100vw;
 	box-sizing: border-box;
@@ -21,7 +25,8 @@ th {
 #barts {
 	background-color: white;
 	box-sizing: border-box;
-	padding:0;
+	padding: 0;
+	margin: 0;
 }
 
 #forms {
@@ -63,7 +68,7 @@ th {
 }
 
 #sched-results {
-	margin-top: 2vh;
+	padding-top: 5vh;
 }
 
 #sched-results p, #sched-results h4 {
@@ -107,8 +112,15 @@ th {
 	border-top: 2px solid white;
 }
 
+#suggestedTime {
+	text-align: center;
+	padding: 1vh;
+	border: 1px solid white;
+}
+
 .suggestedTime {
 	text-align: center;
+	padding: 1vh;
 }
 
 .you-are-here {

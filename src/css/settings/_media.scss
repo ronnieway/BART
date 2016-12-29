@@ -4,16 +4,24 @@
 		font-size: 200%;
 	}
 
+	#barts {
+		width: 100vw;
+	}
+
+	#bigtext {
+		width: 100vw;
+	}
+
 	#form-container, #form-container2 {
 		margin: 5vh 10vw 5vh 10vw auto;
 	}
 
 	#stations-input {
-		width: 76vw;
+		width: 73vw;
 	}
 
 	#stations-input2 {
-		width: 76vw;
+		width: 73vw;
 	}
 
 	#submit-btn, #submit-btn2 {
@@ -39,6 +47,14 @@
 @media (min-width: 768px) and (max-width: 991px) {
 	body {
 		font-size: 180%;
+	}
+
+	#barts {
+		width: 100vw;
+	}
+
+	#bigtext {
+		width: 100vw;
 	}
 
 	#form-container, #form-container2 {

@@ -3,7 +3,6 @@ if ('serviceWorker' in navigator) {
 		.then(function(registration) {
 			console.log('ServiceWorker registration', registration);
 		}).catch(function(err) {
-			throw new Error('ServiceWorker error: ' + err);
+			console.log('ServiceWorker error: ' + err);
 		});
 }
-
